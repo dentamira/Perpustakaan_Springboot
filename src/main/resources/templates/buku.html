@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Buku</title>
+</head>
+<body>
+
+<h1>Daftar Buku</h1>
+
+<p th:if="${pesan}" th:text="${pesan}"></p>
+<p th:if="${error}" th:text="${error}"></p>
+
+<p>
+    <a th:href="@{/anggota}">Lihat Anggota</a>
+</p>
+
+<form th:action="@{/buku}" method="get">
+    <input
+        type="text"
+        name="kata"
+        th:value="${kata}"
+        placeholder="Cari judul buku"
+    >
+    <button type="submit">Cari</button>
+</form>
+
+<p th:if="${#lists.isEmpty(daftarBuku)}">
+    Belum ada buku.
+</p>
+
+<table border="1" th:unless="${#lists.isEmpty(daftarBuku)}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Judul</th>
+            <th>Stok</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="b : ${daftarBuku}">
+            <td th:text="${b.idBuku}">B001</td>
+            <td th:text="${b.judul}">Judul buku</td>
+            <td th:text="${b.stok}">0</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Tambah Buku</h2>
+
+<form th:action="@{/buku}" method="post">
+    <p>
+        <label for="idBuku">ID Buku:</label>
+        <input
+            type="text"
+            id="idBuku"
+            name="idBuku"
+            maxlength="10"
+            required
+        >
+    </p>
+
+    <p>
+        <label for="judul">Judul:</label>
+        <input
+            type="text"
+            id="judul"
+            name="judul"
+            maxlength="200"
+            required
+        >
+    </p>
+
+    <p>
+        <label for="stok">Stok:</label>
+        <input
+            type="number"
+            id="stok"
+            name="stok"
+            min="0"
+            value="1"
+            required
+        >
+    </p>
+
+    <button type="submit">Simpan Buku</button>
+</form>
+
+</body>
+</html>
