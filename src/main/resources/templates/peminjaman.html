@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Peminjaman</title>
+</head>
+<body>
+
+<h1>Daftar Peminjaman Buku</h1>
+
+<nav>
+    <a th:href="@{/buku}">Daftar Buku</a> |
+    <a th:href="@{/anggota}">Daftar Anggota</a> |
+    <a th:href="@{/peminjaman}">Daftar Peminjaman</a>
+</nav>
+
+<hr>
+
+<p th:if="${pesan}" th:text="${pesan}" style="color: green;"></p>
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<p>
+    <a th:href="@{/peminjaman/tambah}">+ Tambah Peminjaman</a>
+</p>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>ID Peminjaman</th>
+            <th>Nama Anggota</th>
+            <th>Judul Buku</th>
+            <th>Tanggal Pinjam</th>
+            <th>Tanggal Kembali</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="p : ${daftarPeminjaman}">
+            <td th:text="${p.idPeminjaman}"></td>
+            <td th:text="${p.anggota.nama}"></td>
+            <td th:text="${p.buku.judul}"></td>
+            <td th:text="${p.tanggalPinjam}"></td>
+            <td th:text="${p.tanggalKembali != null ? p.tanggalKembali : '-'}"></td>
+            <td th:text="${p.status}"></td>
+            <td>
+                <form th:if="${p.status == 'DIPINJAM'}"
+                      th:action="@{/peminjaman/{id}/kembalikan(id=${p.idPeminjaman})}"
+                      method="post">
+                    <button type="submit">Kembalikan</button>
+                </form>
+
+                <span th:if="${p.status == 'DIKEMBALIKAN'}">
+                    Selesai
+                </span>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(daftarPeminjaman)}">
+            <td colspan="7">Belum ada transaksi peminjaman.</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,34 +8,44 @@
 
 <h1>Daftar Anggota</h1>
 
-<p th:if="${pesan}" th:text="${pesan}"></p>
-<p th:if="${error}" th:text="${error}"></p>
+<nav>
+    <a th:href="@{/buku}">Daftar Buku</a> |
+    <a th:href="@{/anggota}">Daftar Anggota</a> |
+    <a th:href="@{/peminjaman}">Daftar Peminjaman</a>
+</nav>
+
+<hr>
+
+<p th:if="${pesan}" th:text="${pesan}" style="color: green;"></p>
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
 
 <p>
     <a th:href="@{/anggota/tambah}">Tambah Anggota</a>
 </p>
 
+<h2>Data Anggota</h2>
+
 <p th:if="${#lists.isEmpty(daftarAnggota)}">
     Belum ada anggota.
 </p>
 
-<table border="1" th:unless="${#lists.isEmpty(daftarAnggota)}">
-    <tr>
-        <th>ID</th>
-        <th>Nama</th>
-        <th>Batas Pinjam</th>
-    </tr>
-
-    <tr th:each="a : ${daftarAnggota}">
-        <td th:text="${a.idAnggota}">A001</td>
-        <td th:text="${a.nama}">Nama</td>
-        <td th:text="${a.batasPinjam}">0</td>
-    </tr>
+<table border="1" cellpadding="8"
+       th:unless="${#lists.isEmpty(daftarAnggota)}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Batas Pinjam</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="a : ${daftarAnggota}">
+            <td th:text="${a.idAnggota}"></td>
+            <td th:text="${a.nama}"></td>
+            <td th:text="${a.batasPinjam}"></td>
+        </tr>
+    </tbody>
 </table>
-
-<p>
-    <a th:href="@{/buku}">← Ke Daftar Buku</a>
-</p>
 
 </body>
 </html>

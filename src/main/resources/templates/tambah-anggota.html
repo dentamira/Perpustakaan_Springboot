@@ -5,24 +5,41 @@
     <title>Tambah Anggota</title>
 </head>
 <body>
-    <h1>Tambah Anggota</h1>
 
-    <form th:action="@{/anggota/tambah}" method="post">
+<h1>Tambah Anggota</h1>
+
+<nav>
+    <a th:href="@{/buku}">Daftar Buku</a> |
+    <a th:href="@{/anggota}">Daftar Anggota</a> |
+    <a th:href="@{/peminjaman}">Daftar Peminjaman</a>
+</nav>
+
+<hr>
+
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<form th:action="@{/anggota/tambah}" method="post">
+    <p>
         <label>ID Anggota:</label>
         <input type="text" name="idAnggota" required>
-        <br><br>
+    </p>
 
+    <p>
         <label>Nama:</label>
         <input type="text" name="nama" required>
-        <br><br>
+    </p>
 
+    <p>
         <label>Batas Pinjam:</label>
         <input type="number" name="batasPinjam" min="0" required>
-        <br><br>
+    </p>
 
-        <button type="submit">Simpan</button>
-    </form>
+    <button type="submit">Simpan</button>
+</form>
 
-    <a th:href="@{/anggota}">Kembali</a>
+<p>
+    <a th:href="@{/anggota}">Kembali ke Daftar Anggota</a>
+</p>
+
 </body>
 </html>

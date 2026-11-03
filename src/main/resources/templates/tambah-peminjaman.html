@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Peminjaman</title>
+</head>
+<body>
+
+<h1>Form Peminjaman Buku</h1>
+
+<nav>
+    <a th:href="@{/buku}">Daftar Buku</a> |
+    <a th:href="@{/anggota}">Daftar Anggota</a> |
+    <a th:href="@{/peminjaman}">Daftar Peminjaman</a>
+</nav>
+
+<hr>
+
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<form th:action="@{/peminjaman/tambah}" method="post">
+
+    <p>
+        <label>Anggota:</label>
+        <select name="idAnggota" required>
+            <option value="">-- Pilih Anggota --</option>
+            <option th:each="a : ${daftarAnggota}"
+                    th:value="${a.idAnggota}"
+                    th:text="${a.idAnggota + ' - ' + a.nama}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        <label>Buku:</label>
+        <select name="idBuku" required>
+            <option value="">-- Pilih Buku --</option>
+            <option th:each="b : ${daftarBuku}"
+                    th:value="${b.idBuku}"
+                    th:text="${b.judul + ' (Stok: ' + b.stok + ')'}"
+                    th:disabled="${b.stok <= 0}">
+            </option>
+        </select>
+    </p>
+
+    <button type="submit">Pinjam Buku</button>
+
+</form>
+
+<p>
+    <a th:href="@{/peminjaman}">Kembali ke Daftar Peminjaman</a>
+</p>
+
+</body>
+</html>

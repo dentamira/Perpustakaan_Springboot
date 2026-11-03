@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,28 +8,32 @@
 
 <h1>Daftar Buku</h1>
 
-<p th:if="${pesan}" th:text="${pesan}"></p>
-<p th:if="${error}" th:text="${error}"></p>
+<nav>
+    <a th:href="@{/buku}">Daftar Buku</a> |
+    <a th:href="@{/anggota}">Daftar Anggota</a> |
+    <a th:href="@{/peminjaman}">Daftar Peminjaman</a>
+</nav>
 
-<p>
-    <a th:href="@{/anggota}">Lihat Anggota</a>
-</p>
+<hr>
+
+<p th:if="${pesan}" th:text="${pesan}" style="color: green;"></p>
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
 
 <form th:action="@{/buku}" method="get">
-    <input
-        type="text"
-        name="kata"
-        th:value="${kata}"
-        placeholder="Cari judul buku"
-    >
+    <input type="text" name="kata"
+           th:value="${kata}"
+           placeholder="Cari judul buku">
     <button type="submit">Cari</button>
 </form>
+
+<h2>Data Buku</h2>
 
 <p th:if="${#lists.isEmpty(daftarBuku)}">
     Belum ada buku.
 </p>
 
-<table border="1" th:unless="${#lists.isEmpty(daftarBuku)}">
+<table border="1" cellpadding="8"
+       th:unless="${#lists.isEmpty(daftarBuku)}">
     <thead>
         <tr>
             <th>ID</th>
@@ -38,12 +41,11 @@
             <th>Stok</th>
         </tr>
     </thead>
-
     <tbody>
         <tr th:each="b : ${daftarBuku}">
-            <td th:text="${b.idBuku}">B001</td>
-            <td th:text="${b.judul}">Judul buku</td>
-            <td th:text="${b.stok}">0</td>
+            <td th:text="${b.idBuku}"></td>
+            <td th:text="${b.judul}"></td>
+            <td th:text="${b.stok}"></td>
         </tr>
     </tbody>
 </table>
@@ -53,36 +55,20 @@
 <form th:action="@{/buku}" method="post">
     <p>
         <label for="idBuku">ID Buku:</label>
-        <input
-            type="text"
-            id="idBuku"
-            name="idBuku"
-            maxlength="10"
-            required
-        >
+        <input type="text" id="idBuku" name="idBuku"
+               maxlength="10" required>
     </p>
 
     <p>
         <label for="judul">Judul:</label>
-        <input
-            type="text"
-            id="judul"
-            name="judul"
-            maxlength="200"
-            required
-        >
+        <input type="text" id="judul" name="judul"
+               maxlength="200" required>
     </p>
 
     <p>
         <label for="stok">Stok:</label>
-        <input
-            type="number"
-            id="stok"
-            name="stok"
-            min="0"
-            value="1"
-            required
-        >
+        <input type="number" id="stok" name="stok"
+               min="0" value="1" required>
     </p>
 
     <button type="submit">Simpan Buku</button>
